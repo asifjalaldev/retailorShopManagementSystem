@@ -1,0 +1,94 @@
+{%extends 'home/base.html'%}
+{%block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-6">
+            <p class="text-center">
+            <form action="{%url 'searchproduct'%}" method="get">
+                {% csrf_token %}
+                <table class="">
+                    <tr>
+                        <!-- <td style="padding-right:13px;"><input type="number" name="id" id="" placeholder="id"></td> -->
+                        <input type="text" list="productlist" placeholder="search product" name="name" class="form-control mt-3">
+                        <datalist id="productlist">
+                         {%for product in products%}
+                             <option value="{{product.name}}">{{product.name}}</option>
+                         {%endfor%}
+                        </datalist> 
+                        <!-- <td style="padding-right:13px;"><input type="text" name="name" id="" placeholder="product name"></td> -->
+                        <td><p class="text-center"><button type="submit" class="btn btn-primary">Search</button></p></td>
+                    </tr>
+                </table>
+            </form>
+            </p>
+        </div>
+        <div class="col-sm-3">
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-8">
+
+            <table class="table table-primary" style="overflow: hidden;">
+                <tr>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>Qty</th>
+                    <th>Cost Price</th>
+                    <th>Sale Price</th>
+                    <th>model</th>
+                    <th>Profit</th>
+                    <th colspan="2">Action</th>
+                </tr>
+                <tr>
+
+                </tr>
+                {%for product in products%}
+                <tr>
+                    <td>{{product.id}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.qty}}</td>
+                    <td>{{product.costprice}}</td>
+                    <td>{{product.saleprice}}</td>
+                    <td>{{product.prod_model}}</td>
+                    <td>{{product.profit}}</td>
+                    <td><a href="{%url 'deleteproduct' product.id %}" class="btn btn-danger">Delete</a></td>
+                    <td><a href="{%url 'updateproduct' product.id%}" class="btn btn-primary">Edit</a></td>
+                </tr>
+                {%endfor%}
+            </table>
+
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>
+
+
+
+
+
+{%endblock%}

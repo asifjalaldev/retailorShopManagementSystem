@@ -1,0 +1,23 @@
+{% extends 'home/base.html' %}
+
+{%block content%}
+<div class="container">
+    <div class="content-section">
+        <form action="" method="post">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">
+                   Delete Product
+                </legend>
+              <h2>Are you sure you want to delete product "{{object.name}}"</h2>
+
+            </fieldset>
+            <div class="form-group">
+                <button type="submit" class="btn btn-outline-danger"> Confirm</button>
+                <a  class="btn btn-outline-secondary" href="{% url 'productlist' %}"> cancel</a>
+            </div>
+        </form>
+      
+    </div>
+</div>
+{%endblock content%}
