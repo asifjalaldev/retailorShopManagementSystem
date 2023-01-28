@@ -3,14 +3,6 @@
 {%block content%}
 
 <div class="container">
-    <div class="row">
-<form action="{%url 'home' %}" method="post">
-    {% csrf_token %}
-  Select Date to see profit: <input type="date" name="_date" id="" placeholder=""> 
-<button type="submit" class="btn btn-primary">Filter</button>
-</form>
-</div>
-  <!-- ----------------------------date filter ----------------- -->
 
     <div class="row mt-3">
         <div class="col-sm-3">
@@ -27,12 +19,9 @@
             </div>
         </div>
         <div class="col-sm-4">
-            <div class="card " style="background-color:rgb(252, 166, 160); display: block;">
+            <div class="card " style="background-color:rgb(160, 252, 168); display: block;">
                 <div class="card-header">
-                  <div class="card-title"> <h4><p class="text-center"> Profit</p></h4>
-                <p class="text-center"> {{date}}</p>
-                </div>
-
+                  <div class="card-title"> <h4><p class="text-center">Today Profit</p></h4></div>
                 </div>
                 <div class="card-body">
                    <p class="text-center" style="font-size: 36px;"> {{todaysale}}</p>
@@ -75,11 +64,11 @@
                     <td>{{product.saleprice}}</td>
                     <td>{{product.prod_model}}</td>
                     <td><a href="{%url 'deleteproduct' product.id %}" class="btn btn-danger">Delete</a></td>
-                    <td><a href="{%url 'updateproduct' product.id%}" class="btn btn-primary">Update</a></td>
+                    <td><a href="{%url 'updateproduct' product.id%}" class="btn btn-primary">Edit</a></td>
                 </tr>
                 {%endfor%}
             </table>
-{%endif%}
+        {%endif%}
            
 
         </div>
@@ -112,6 +101,30 @@
 
         </div>
     </div>
+
+    <div class="row">
+<p class="text-center"><h2>Top 5 selling Products</h2></p>
+        <div class="col-sm-12">
+            <table class="table table-primary">
+                <tr>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>model</th>
+                </tr>
+                {%for product in topProducts%}
+                <tr>
+                    <td> {{product.name}}</td>
+                    <td>{{product.model}}</td>
+                    <td>{{product.countsoldProduct}}</td>
+                </tr>
+                {%endfor%}
+            </table>
+           
+          
+        
+        </div>
+    </div>
+
 </div>
 
 {%endblock%}

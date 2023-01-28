@@ -8,6 +8,7 @@ class Product(models.Model):
     qty=models.IntegerField(default=1)
     prod_model=models.CharField(max_length=50, null=True)
     profit=models.IntegerField(default=0)
+    countsoldProduct=models.IntegerField(default=0)
     def __str__(self):
         return self.name
 class Sold_prduct(models.Model):
