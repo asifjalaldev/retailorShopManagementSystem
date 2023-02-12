@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from datetime import datetime
 from django.contrib import messages
+from .forms import easypaisaOutForm
 # Create your views here.
 
 def home(request):
@@ -91,3 +92,48 @@ def soldProduct(request):
             context={'product':product}
             return render(request,'home/soldProduct_form.html',context)
     return redirect('soldproduct')
+class AddEasyPaisa(CreateView):
+    model=Easypaisa_in
+    template_name='home/easypaisa.html'
+    fields=['easypaisa_balance_in']
+    success_url=reverse_lazy('addEasypaisa')
+    def form_valid(self,form):
+        form.instance.date=datetime.today().date()
+        newBalance=form.cleaned_data['easypaisa_balance_in']
+        lastRec=Easypaisa_in.objects.latest('id')#getting last record 
+        form.instance.total=lastRec.total+newBalance
+        return super().form_valid(form)
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        total_balance=Easypaisa_in.objects.latest('id').total
+        todayEasypaisa=Easypaisa_in.objects.filter(date=datetime.today().date()).order_by('-id')
+        context['todayEasypaisa']=todayEasypaisa
+        context['totalBalance']=total_balance
+        return context
+def payEasypaisa(request):
+    if request.method=='GET':
+        form=easypaisaOutForm()
+        total_balance=Easypaisa_in.objects.latest('id').total
+        todayEasypaisa=Easypaisa_out.objects.filter(date=datetime.today().date()).order_by('-id')
+      
+        context={'form': form, 'total_balance':total_balance, 'todayEasypaisa':todayEasypaisa}
+        return render(request,'home/outEasypaisa.html', context)
+    else: #if method is post
+        form=easypaisaOutForm(request.POST)
+        if form.is_valid():
+            form.instance.date=datetime.today().date()
+            lastRec=Easypaisa_in.objects.latest('id')
+            payBalance=form.cleaned_data['easypaisa_balance_out']
+            if lastRec.total>=payBalance:
+                remainingBalance=lastRec.total-payBalance
+                lastRec.total=remainingBalance
+                lastRec.save()
+                form.save()
+                # blance=form.cleaned_data['easypaisa_balance_out']
+                messages.success(request,'balance paid successfully')
+                form=easypaisaOutForm()
+                context={'form': form}
+                return render(request, 'home/outEasypaisa.html',context)
+            else:
+                messages.error(request,"sorry! Balance is not enough!")
+                return redirect('outEasypaisa')

@@ -20,23 +20,26 @@ class Sold_prduct(models.Model):
     profit=models.IntegerField(default=0)
     def __str__(self):
         return self.product.name
-# class Jazzcash_in(models.Model):
-#     jazzcash_balance_in= models.DecimalField(max_digits=10, decimal_places=2)
-#     date=models.DateField()
-#     def __str__(self):
-#         return self.jazzcash_balance_in
-# class Jazzcash_out(models.Model):
-#     jazzcash_balance_out= models.DecimalField(max_digits=10, decimal_places=2)
-#     date=models.DateField()
-#     def __str__(self):
-#         return self.jazzcash_balance_out
-# class Easypaisa_in(models.Model):
-#     easypaisa_balance_in= models.DecimalField(max_digits=10, decimal_places=2)
-#     date=models.DateField()
-#     def __str__(self):
-#         return self.easypaisa_balance_in
-# class Easypaisa_out(models.Model):
-#     easypaisa_balance_out= models.DecimalField(max_digits=10, decimal_places=2)
-#     date=models.DateField()
-#     def __str__(self):
-#         return self.easypaisa_balance_out
+class Jazzcash_in(models.Model):
+    jazzcash_balance_in= models.DecimalField(max_digits=10, decimal_places=2)
+    date=models.DateField()
+    # def __str__(self):
+    #     return self.jazzcash_balance_in
+class Jazzcash_out(models.Model):
+    jazzcash_balance_out= models.DecimalField(max_digits=10, decimal_places=2)
+    date=models.DateField()
+    charges=models.CharField(max_length=50, null=True)
+    # def __str__(self):
+    #     return self.jazzcash_balance_out
+class Easypaisa_in(models.Model):
+    easypaisa_balance_in= models.DecimalField(max_digits=10, decimal_places=2)
+    date=models.DateField()
+    total=models.DecimalField(max_digits=10, decimal_places=2, default=None, null=True)
+    # def __str__(self):
+    #     return self.easypaisa_balance_in
+class Easypaisa_out(models.Model):
+    easypaisa_balance_out= models.DecimalField(max_digits=10, decimal_places=2)
+    date=models.DateField()
+    charges=models.CharField(max_length=50, null=True)
+    # def __str__(self):
+    #     return self.easypaisa_balance_out

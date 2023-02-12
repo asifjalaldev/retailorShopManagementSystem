@@ -9,5 +9,7 @@ urlpatterns = [
  path('deleteProduct/<int:pk>',DeleteProductView.as_view(),name='deleteproduct'),
  path('updateProduct/<int:pk>',UpdateProductView.as_view(),name='updateproduct'),
  path('searchproduct/', views.searchProduct,name='searchproduct'),
- path('sold/', views.soldProduct,name='soldproduct')
+ path('sold/', views.soldProduct,name='soldproduct'),
+ path('easypaisa/',AddEasyPaisa.as_view(), name='addEasypaisa'),
+ path('outEasyPaisa',views.payEasypaisa, name='outEasypaisa')
 ]

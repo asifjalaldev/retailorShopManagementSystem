@@ -1,0 +1,69 @@
+{%extends 'home/base.html'%}
+{% load crispy_forms_tags %}
+{%block content%}
+<div class="container  pt-3" style="background-color: rgb(179, 241, 221);">
+    <div class="row m-3">
+        <div class="col-sm-4">
+
+        </div>
+        <div class="col-sm-4">
+            <div class="card" style="background-color: blueviolet; color: white;">
+                <div class="card-header text-center">
+                    Total Balance
+                </div>
+                <div class="card-body text-center" style="color: white;">
+                    <h3>{{totalBalance}}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+
+        </div>
+        <div class="col-sm-6">
+            <form action="" method="post">
+                {%csrf_token%}
+                {{form|crispy}}
+                <p class="text-center"><button type="submit" class="btn btn-success">Add Balance</button></p>
+            </form>
+        </div>
+        <div class="col-sm-3">
+            
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-12 mt-3">
+            <p class="text-center"><a href="{%url 'outEasypaisa'%}" >Pay EasyPaisa</a></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+
+        </div>
+        <div class="col-sm-8">
+            {%if todayEasypaisa%}
+            <table class="table table-secondary">
+                <tr>
+                    <th>balance</th>
+                    <th>Date</th>
+                </tr>
+                {%for balance in todayEasypaisa%}
+                <tr>
+                    <td>{{balance.easypaisa_balance_in}}</td>
+                    <td>{{balance.date}}</td>
+                </tr>
+                {%endfor%}
+            </table>
+            {%endif%}
+        </div>
+        <div class="col-sm-2">
+
+        </div>
+    </div>
+</div>
+{%endblock%}
